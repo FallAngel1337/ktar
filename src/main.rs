@@ -1,14 +1,19 @@
 use clap::Parser;
 mod cli;
 
+use ktar_lib::Archive;
+
 fn main() {
     let cli = cli::Cli::parse();
     
-    if cli.extract {
-        println!("Extracting => {files:?}", files = cli.files)
+    if let Some(dest) = cli.extract {
+        println!("{dest:?} => {files:?}", files = cli.files);
     }
 
-    if cli.create {
-        println!("Compressing => {files:?}", files = cli.files)
+    if let Some(output) = cli.create {
+        Archive::create(&cli.files, output).unwrap_or_else(|e| {
+            eprintln!("Failed to create the archive! Error: {e}");
+            std::process::exit(1);
+        });
     }
 }
