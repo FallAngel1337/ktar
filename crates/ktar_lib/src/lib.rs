@@ -8,7 +8,7 @@ mod untar;
 
 #[derive(Debug, Clone)]
 pub(crate) struct ArchiveFile {
-    file_name: PathBuf,
+    file_name: String,
     file_size: usize,
     contents: Vec<u8>,
 }
@@ -21,8 +21,7 @@ impl ArchiveFile {
         let mut file = File::open(file_name)?;
         let metadata = file.metadata()?;
         let file_size = metadata.st_size() as usize;
-        let mut contents = vec![0u8; file_size];
-
+        let mut contents = Vec::with_capacity(file_size);
         if file.read_to_end(&mut contents)? != file_size {
             eprintln!(r"\`st_size\` and \`file_size\` are not equal");
             std::process::exit(1);
@@ -30,7 +29,11 @@ impl ArchiveFile {
         
         Ok(
             Self {
-                file_name: file_name.as_ref().to_path_buf(),
+                file_name: file_name
+                    .as_ref()
+                    .to_str()
+                    .unwrap()
+                    .to_string(),
                 file_size,
                 contents,
             }
