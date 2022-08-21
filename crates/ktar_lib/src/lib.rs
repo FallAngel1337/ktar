@@ -6,14 +6,14 @@ use std::fs::{Metadata, File};
 mod tar;
 mod untar;
 
-pub struct ArchiveFile {
+pub(crate) struct ArchiveFile {
     file_name: PathBuf,
     metadata: Metadata,
     content: Vec<u8>,
 }
 
 pub struct Archive {
-    pub files: Vec<ArchiveFile>,
+    files: Vec<ArchiveFile>,
 }
 
 impl ArchiveFile {
@@ -22,7 +22,7 @@ impl ArchiveFile {
         let metadata = file.metadata()?;
         let file_size = metadata.st_size() as usize;
         let mut content = vec![0u8; file_size];
-        
+
         if file.read_to_end(&mut content)? != file_size {
             eprintln!(r"\`st_size\` and \`file_size\` are not equal");
             std::process::exit(1);
