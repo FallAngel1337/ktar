@@ -6,12 +6,14 @@ use std::fs::{Metadata, File};
 mod tar;
 mod untar;
 
+#[derive(Debug, Clone)]
 pub(crate) struct ArchiveFile {
     file_name: PathBuf,
     metadata: Metadata,
     content: Vec<u8>,
 }
 
+#[derive(Debug, Clone)]
 pub struct Archive {
     files: Vec<ArchiveFile>,
 }
