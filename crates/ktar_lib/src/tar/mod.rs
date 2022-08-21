@@ -3,16 +3,13 @@ use std::path::PathBuf;
 use crate::{Archive, ArchiveFile};
 
 impl Archive {
-    pub fn create(files: &[PathBuf]) -> IoResult<Self> {
-        let mut files_vec = Vec::with_capacity(files.len());
+    pub fn create(files: &[PathBuf]) -> IoResult<Vec<u8>> {
+        let mut _files = vec![];
         for file in files {
-            files_vec.push(ArchiveFile::new(file)?);
+            _files.push(ArchiveFile::new(file)?);
         }
+        let files = _files;
 
-        Ok(
-            Self {
-                files: files_vec
-            }
-        )
+        Ok(vec![])
     }
 }
