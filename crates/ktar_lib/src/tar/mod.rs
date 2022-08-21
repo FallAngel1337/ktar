@@ -1,9 +1,9 @@
 use std::io::Result as IoResult;
-use std::path::Path;
+use std::path::PathBuf;
 use crate::{Archive, ArchiveFile};
 
 impl Archive {
-    fn create(files: &[&Path]) -> IoResult<Self> {
+    pub fn create(files: &[PathBuf]) -> IoResult<Self> {
         let mut files_vec = Vec::with_capacity(files.len());
         for file in files {
             files_vec.push(ArchiveFile::new(file)?);
