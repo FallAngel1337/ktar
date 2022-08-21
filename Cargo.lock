@@ -100,7 +100,12 @@ name = "ktar"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "ktar-lib",
 ]
+
+[[package]]
+name = "ktar-lib"
+version = "0.1.0"
 
 [[package]]
 name = "libc"
