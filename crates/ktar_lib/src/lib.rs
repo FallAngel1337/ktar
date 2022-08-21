@@ -1,6 +1,6 @@
 use std::io::{Result as IoResult, Read};
 use std::os::linux::fs::MetadataExt;
-use std::path::{PathBuf, Path};
+use std::path::Path;
 use std::fs::File;
 
 mod tar;
@@ -31,6 +31,8 @@ impl ArchiveFile {
             Self {
                 file_name: file_name
                     .as_ref()
+                    .file_name()
+                    .unwrap()
                     .to_str()
                     .unwrap()
                     .to_string(),

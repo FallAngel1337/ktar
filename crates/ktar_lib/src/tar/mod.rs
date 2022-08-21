@@ -15,9 +15,11 @@ impl Archive {
                 file_contemts
             ) = (
                 archive.file_name.as_bytes(),
-                &archive.file_name.len().to_le_bytes(),
-                &archive.file_size.to_le_bytes(),
+                &archive.file_name.len().to_ne_bytes(),
+                &archive.file_size.to_ne_bytes(),
                 &archive.contents);
+            
+            println!("{:?}, {:?}, {:?}", std::str::from_utf8(file_name), usize::from_ne_bytes(*file_name_len), usize::from_ne_bytes(*file_size));
 
             tarball.extend_from_slice(&[file_name_len, file_name, file_size, file_contemts].concat())
         }
